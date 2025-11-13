@@ -5,17 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 /**
- * Data transfer object capturing user registration details.
+ * DTO encapsulating user login credentials.
  *
- * <p>Validated fields ensure basic integrity for incoming registration requests.</p>
+ * <p>Validation ensures email and password inputs meet basic requirements.</p>
  *
  * @author s Bostan
  * @since Nov, 2025
  */
-public class UserRegistrationRequest {
-    @NotBlank
-    @Size(min = 2, max = 100)
-    private String name;
+public class UserLoginRequest {
 
     @NotBlank
     @Email(message = "Email must be valid")
@@ -26,52 +23,34 @@ public class UserRegistrationRequest {
     private String password;
 
     /**
-     * Returns the user's full name.
+     * Returns the login email address.
      *
-     * @return full name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the user's full name.
-     *
-     * @param name full name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Returns the registrant's email address.
-     *
-     * @return email address
+     * @return email
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * Sets the registrant's email address.
+     * Sets the login email address.
      *
-     * @param email email address
+     * @param email login email
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * Returns the plain password provided during registration.
+     * Returns the raw login password.
      *
-     * @return raw password
+     * @return password
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * Sets the plain password provided during registration.
+     * Sets the raw login password.
      *
      * @param password raw password
      */
@@ -79,4 +58,5 @@ public class UserRegistrationRequest {
         this.password = password;
     }
 }
+
 
