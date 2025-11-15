@@ -25,12 +25,14 @@ import java.util.List;
  *
  * <p>The configuration enforces stateless REST security, exposes a BCrypt password encoder,
  * and enables CORS so a React (or any JS) frontend can call the API.</p>
+ * @author s Bostan
+ * @since Nov, 2025
  */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private static final String FRONTEND_ORIGIN = "http://localhost:3000";
+    private static final String FRONTEND_ORIGIN = "http://localhost:5173";
 
     /**
      * Defines the primary HTTP security chain.
