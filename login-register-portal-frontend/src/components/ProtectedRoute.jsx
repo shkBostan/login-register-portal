@@ -1,3 +1,13 @@
+/**
+ * Protected route component that ensures only authenticated users can access certain routes.
+ *
+ * <p>Wraps protected components and redirects unauthenticated users to the login page.
+ * Displays a loading spinner while checking authentication status.</p>
+ *
+ * @author s Bostan
+ * @since Nov, 2025
+ */
+
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 

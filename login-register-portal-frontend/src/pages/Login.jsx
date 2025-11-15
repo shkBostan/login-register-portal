@@ -1,3 +1,13 @@
+/**
+ * Login page component for user authentication.
+ *
+ * <p>Displays a login form with email and password fields, validates user input,
+ * and handles authentication through the AuthContext.</p>
+ *
+ * @author s Bostan
+ * @since Nov, 2025
+ */
+
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'

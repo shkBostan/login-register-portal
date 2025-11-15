@@ -1,5 +1,15 @@
+/**
+ * Authentication context provider for managing user authentication state.
+ *
+ * <p>Provides authentication functionality including login, register, and logout operations.
+ * Manages user state and authentication tokens stored in localStorage.</p>
+ *
+ * @author s Bostan
+ * @since Nov, 2025
+ */
+
 import { createContext, useContext, useState, useEffect } from 'react'
-import { authService } from '../services/api'
+import { registerUser, loginUser, logoutUser } from '../services/api'
 
 const AuthContext = createContext(null)
 
@@ -34,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await authService.login({ email, password })
+      const response = await loginUser({ email, password })
       const { user: userData, token } = response
       
       localStorage.setItem('token', token)
@@ -50,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await authService.register({ name, email, password })
+      await registerUser({ name, email, password })
       // After registration, automatically log in
       return await login(email, password)
     } catch (error) {
@@ -61,7 +71,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await authService.logout()
+      await logoutUser()
     } catch (error) {
       console.error('Logout error:', error)
     } finally {

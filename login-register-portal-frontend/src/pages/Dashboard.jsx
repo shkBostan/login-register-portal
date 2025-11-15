@@ -1,3 +1,13 @@
+/**
+ * Dashboard page component displaying user information and welcome message.
+ *
+ * <p>Shows a welcome message with the user's name and displays user information
+ * including name, email, and user ID. Only accessible to authenticated users.</p>
+ *
+ * @author s Bostan
+ * @since Nov, 2025
+ */
+
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 

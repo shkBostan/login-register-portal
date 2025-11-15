@@ -1,3 +1,13 @@
+/**
+ * Registration page component for creating new user accounts.
+ *
+ * <p>Displays a registration form with name, email, password, and confirm password fields.
+ * Validates user input client-side and handles user registration through the AuthContext.</p>
+ *
+ * @author s Bostan
+ * @since Nov, 2025
+ */
+
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
