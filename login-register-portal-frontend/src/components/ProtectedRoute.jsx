@@ -6,8 +6,8 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="loading-container">
-        <div className="spinner"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+        <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     )
   }
@@ -16,4 +16,3 @@ const ProtectedRoute = ({ children }) => {
 }
 
 export default ProtectedRoute
-
