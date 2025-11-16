@@ -24,6 +24,7 @@ const Register = () => {
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  const [submitSuccess, setSubmitSuccess] = useState('')
 
   const validateField = (name, value) => {
     let error = ''
@@ -77,6 +78,7 @@ const Register = () => {
       setErrors((prev) => ({ ...prev, [name]: '' }))
     }
     setSubmitError('')
+    setSubmitSuccess('')
   }
 
   const handleBlur = (e) => {
@@ -104,6 +106,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSubmitError('')
+    setSubmitSuccess('')
 
     if (!validateForm()) {
       return
@@ -115,6 +118,9 @@ const Register = () => {
       const result = await register(formData.name, formData.email, formData.password)
       
       if (result.success) {
+        if (result.message) {
+          setSubmitSuccess(result.message)
+        }
         navigate('/dashboard')
       } else {
         setSubmitError(result.error || 'Registration failed. Please try again.')
@@ -138,6 +144,12 @@ const Register = () => {
               Sign up to get started
             </p>
           </div>
+
+          {submitSuccess && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-green-700">{submitSuccess}</p>
+            </div>
+          )}
 
           {submitError && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">

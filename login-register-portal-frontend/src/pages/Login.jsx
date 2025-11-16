@@ -22,6 +22,7 @@ const Login = () => {
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  const [submitSuccess, setSubmitSuccess] = useState('')
 
   const validateField = (name, value) => {
     let error = ''
@@ -57,6 +58,7 @@ const Login = () => {
       setErrors((prev) => ({ ...prev, [name]: '' }))
     }
     setSubmitError('')
+    setSubmitSuccess('')
   }
 
   const handleBlur = (e) => {
@@ -84,6 +86,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSubmitError('')
+    setSubmitSuccess('')
 
     if (!validateForm()) {
       return
@@ -95,6 +98,9 @@ const Login = () => {
       const result = await login(formData.email, formData.password)
       
       if (result.success) {
+        if (result.message) {
+          setSubmitSuccess(result.message)
+        }
         navigate('/dashboard')
       } else {
         setSubmitError(result.error || 'Login failed. Please try again.')
@@ -118,6 +124,12 @@ const Login = () => {
               Sign in to your account
             </p>
           </div>
+
+          {submitSuccess && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-green-700">{submitSuccess}</p>
+            </div>
+          )}
 
           {submitError && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">

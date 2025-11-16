@@ -50,16 +50,18 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await loginUser({ email, password })
-      const { user: userData, token } = response
+      const { user: userData, token, message } = response
       
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(userData))
       setUser(userData)
       setToken(token)
       
-      return { success: true }
+      return { success: true, message }
     } catch (error) {
-      const errorMessage = error.response?.data?.error || 'Login failed. Please try again.'
+      const backendMessage =
+        error.response?.data?.error || error.response?.data?.message
+      const errorMessage = backendMessage || 'Login failed. Please try again.'
       return { success: false, error: errorMessage }
     }
   }
@@ -67,10 +69,13 @@ export const AuthProvider = ({ children }) => {
   const register = async (name, email, password) => {
     try {
       await registerUser({ name, email, password })
-      // After registration, automatically log in
-      return await login(email, password)
+      // After registration, automatically log in and reuse its backend message
+      const loginResult = await login(email, password)
+      return loginResult
     } catch (error) {
-      const errorMessage = error.response?.data?.error || 'Registration failed. Please try again.'
+      const backendMessage =
+        error.response?.data?.error || error.response?.data?.message
+      const errorMessage = backendMessage || 'Registration failed. Please try again.'
       return { success: false, error: errorMessage }
     }
   }
