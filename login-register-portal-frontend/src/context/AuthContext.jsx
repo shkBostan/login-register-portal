@@ -22,17 +22,22 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }) => {
+  // Logged-in user information
   const [user, setUser] = useState(null)
+  // JWT token associated with the current session
+  const [token, setToken] = useState(null)
+  // Loading flag while restoring auth state from localStorage
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check if user is already logged in
+    // Check if user is already logged in (restore from localStorage)
     const storedUser = localStorage.getItem('user')
     const storedToken = localStorage.getItem('token')
     
     if (storedUser && storedToken) {
       try {
         setUser(JSON.parse(storedUser))
+        setToken(storedToken)
       } catch (error) {
         console.error('Error parsing stored user:', error)
         localStorage.removeItem('user')
@@ -50,6 +55,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(userData))
       setUser(userData)
+      setToken(token)
       
       return { success: true }
     } catch (error) {
@@ -78,16 +84,22 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       setUser(null)
+      setToken(null)
     }
   }
 
   const value = {
+    // core auth state
+    isAuthenticated: !!user,
     user,
+    token,
+
+    // actions
     login,
     register,
     logout,
+    // status flags
     loading,
-    isAuthenticated: !!user,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
